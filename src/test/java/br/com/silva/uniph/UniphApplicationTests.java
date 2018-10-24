@@ -1,4 +1,4 @@
-package br.com.silva.uniph.uniph;
+package br.com.silva.uniph;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
