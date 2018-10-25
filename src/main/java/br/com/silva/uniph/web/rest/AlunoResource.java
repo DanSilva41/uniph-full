@@ -59,7 +59,7 @@ public class AlunoResource {
     public ResponseEntity<Aluno> cadastrar(@RequestBody @Valid Aluno aluno) throws URISyntaxException {
         log.info("Requisição REST para salvar Animal: {}", aluno);
         Aluno alunoSalvo = this.alunoService.salvar(aluno);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(alunoSalvo.getCodigo()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(alunoSalvo.getCpf()).toUri();
         return ResponseEntity.created(uri).body(alunoSalvo);
     }
 
