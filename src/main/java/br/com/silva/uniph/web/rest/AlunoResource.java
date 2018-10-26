@@ -2,7 +2,6 @@ package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Aluno;
 import br.com.silva.uniph.service.AlunoService;
-import br.com.silva.uniph.service.dto.AlunoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 /**

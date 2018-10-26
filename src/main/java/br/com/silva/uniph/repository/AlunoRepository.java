@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
 /**
- * Spring Data JPA repository for the User entity.
+ * Spring Data JPA repository for the Aluno entity.
  *
  * @author Danilo Silva P.
  */

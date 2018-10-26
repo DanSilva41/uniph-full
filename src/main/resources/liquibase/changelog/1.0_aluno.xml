@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet author="danilo.silva" id="1.0.1" logicalFilePath="src/main/resources/liquibase/changelog/1.0_aluno.xml" >
+    <changeSet author="danilo.silva" id="1.0.1" logicalFilePath="src/main/resources/liquibase/changelog/1.0_aluno.xml">
         <createTable tableName="tb_aluno">
 
             <column name="codigo" type="bigint">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
+
+            <column name="nome" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="sobrenome" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="telefone" type="varchar"/>
+
+            <column name="data_nascimento" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="genero" type="smallint"/>
 
             <column name="rg" type="varchar(7)">
                 <constraints unique="true"/>
@@ -20,5 +38,7 @@
                 <constraints unique="true" nullable="false"/>
             </column>
         </createTable>
+
+        <createSequence sequenceName="tb_aluno_cod_seq" incrementBy="1" startValue="1"/>
     </changeSet>
 </databaseChangeLog>

@@ -1,21 +1,13 @@
 package br.com.silva.uniph.service.dto;
 
 import br.com.silva.uniph.domain.Aluno;
-import br.com.silva.uniph.domain.Pessoa;
-import br.com.silva.uniph.domain.Sexo;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 /**
  * Uma DTO representa um aluno

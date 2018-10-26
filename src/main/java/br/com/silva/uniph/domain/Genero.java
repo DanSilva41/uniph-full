@@ -3,7 +3,7 @@ package br.com.silva.uniph.domain;
 /**
  * @author Danilo Silva P.
  */
-public enum Sexo {
+public enum Genero {
 
     MASCULINO(1, "Masculino"), FEMININO(2, "Feminino");
 
@@ -16,7 +16,7 @@ public enum Sexo {
      * @param chave a chave
      * @param valor o valor
      */
-    Sexo(Integer chave, String valor) {
+    Genero(Integer chave, String valor) {
         id = chave;
         descricao = valor;
     }
