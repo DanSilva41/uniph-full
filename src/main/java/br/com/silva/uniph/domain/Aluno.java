@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Danilo Silva P.
@@ -44,6 +46,9 @@ public final class Aluno extends Pessoa implements Serializable {
     @JoinColumn(name = "codigo", referencedColumnName = "codigo_usuario")
     private Usuario usuario;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "alunos", cascade = CascadeType.ALL)
+    private Set<Turma> turmas = new HashSet<>(0);
+
     public Aluno(String nome, String sobrenome, String email, String telefone, LocalDate dataNascimento, Genero genero, String rg, String cpf, Usuario usuario) {
         setNome(nome);
         setSobrenome(sobrenome);
@@ -68,6 +73,9 @@ public final class Aluno extends Pessoa implements Serializable {
         return usuario;
     }
 
+    public Set<Turma> getTurmas() {
+        return turmas;
+    }
 
     @Override
     public String toString() {

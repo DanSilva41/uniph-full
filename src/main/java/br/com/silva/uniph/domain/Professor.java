@@ -4,11 +4,15 @@ import com.google.common.base.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Danilo Silva P.
@@ -27,6 +31,17 @@ public class Professor extends Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tb_professor_cod_seq")
     private Long codigo;
 
+    @NotNull
+    @Size(min = 1, max = 7)
+    @Column(length = 7, unique = true, nullable = false)
+    private String rg;
+
+    @NotNull
+    @CPF
+    @Size(min = 1, max = 11)
+    @Column(length = 11, unique = true, nullable = false)
+    private String cpf;
+
     @Column(length = 5000)
     private String curriculo;
 
@@ -35,21 +50,31 @@ public class Professor extends Pessoa implements Serializable {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "professor", targetEntity = Disciplina.class)
-    private List<Disciplina> disciplina;
+    private Set<Disciplina> disciplinas = new HashSet<>(0);
 
-    public Professor(String nome, String sobrenome, String email, String telefone, LocalDate dataNascimento, Genero genero, String curriculo, Usuario usuario) {
+    public Professor(String nome, String sobrenome, String email, String telefone, LocalDate dataNascimento, Genero genero, String rg, String cpf, String curriculo, Usuario usuario) {
         setNome(nome);
         setSobrenome(sobrenome);
         setEmail(email);
         setTelefone(telefone);
         setDataNascimento(dataNascimento);
         setGenero(genero);
+        this.rg = rg;
+        this.cpf = cpf;
         this.curriculo = curriculo;
         this.usuario = usuario;
     }
 
     public Long getCodigo() {
         return codigo;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 
     public String getCurriculo() {
@@ -60,14 +85,15 @@ public class Professor extends Pessoa implements Serializable {
         return usuario;
     }
 
-    public List<Disciplina> getDisciplina() {
-        return disciplina;
+    public Set<Disciplina> getDisciplinas() {
+        return disciplinas;
     }
 
     @Override
     public String toString() {
         return "Professor{" +
-                "codigo=" + codigo +
+                ", rg='" + rg + '\'' +
+                ", cpf='" + cpf + '\'' +
                 ", curriculo='" + curriculo + '\'' +
                 '}';
     }

@@ -40,7 +40,7 @@ public class AlunoResource {
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
+    public ResponseEntity<Aluno> buscarPeloCodigo(@PathVariable Long codigo) {
         log.info("REST request para buscar Aluno: {}", codigo);
         Optional<Aluno> alunoRetornado = this.alunoService.buscarPorCodigo(codigo);
         return alunoRetornado.isPresent() ? ResponseEntity.ok(alunoRetornado.get()) : ResponseEntity.notFound().build();
@@ -54,7 +54,7 @@ public class AlunoResource {
      * @throws URISyntaxException se a sintaxe do URI de localização estiver incorreta
      */
     @PostMapping
-    public ResponseEntity<Aluno> cadastrar(@RequestBody @Valid Aluno aluno) throws URISyntaxException {
+    public ResponseEntity<Aluno> cadastrar(@Valid @RequestBody Aluno aluno) throws URISyntaxException {
         log.info("Requisição REST para salvar Animal: {}", aluno);
         Aluno alunoSalvo = this.alunoService.salvar(aluno);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(alunoSalvo.getCpf()).toUri();

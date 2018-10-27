@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Danilo Silva P.
@@ -16,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_disciplina")
-public class Disciplina {
+public class Disciplina implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,12 +31,15 @@ public class Disciplina {
     @NotNull
     private String descricao;
 
+    @Column(name = "carga_horaria")
+    private Short cargaHoraria;
+
     @ManyToOne
     @JoinColumn(name = "codigo_professor", referencedColumnName = "codigo")
     private Professor professor;
 
-    @Column(name = "carga_horaria")
-    private String cargaHoraria;
+    @ManyToMany(mappedBy = "disciplinas", cascade = CascadeType.ALL)
+    private Set<Turma> turmas = new HashSet<>(0);
 
     public Long getCodigo() {
         return codigo;
@@ -43,12 +49,16 @@ public class Disciplina {
         return descricao;
     }
 
+    public Short getCargaHoraria() {
+        return cargaHoraria;
+    }
+
     public Professor getProfessor() {
         return professor;
     }
 
-    public String getCargaHoraria() {
-        return cargaHoraria;
+    public Set<Turma> getTurmas() {
+        return turmas;
     }
 
     @Override

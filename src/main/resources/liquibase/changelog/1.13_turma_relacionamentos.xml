@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="danilo.silva" id="1.1.4"
+               logicalFilePath="src/main/resources/liquibase/changelog/1.13_turma_relacionamentos.xml">
+
+        <createTable tableName="tb_aluno_turma">
+            <column name="codigo_turma" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="codigo_aluno" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_turma"
+                                 baseTableName="tb_aluno_turma"
+                                 constraintName="fk_tb_aluno_turma_codigo_turma"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_aluno"
+                                 baseTableName="tb_aluno_turma"
+                                 constraintName="fk_tb_aluno_turma_codigo_aluno"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_aluno"/>
+
+        <createTable tableName="tb_disciplina_turma">
+            <column name="codigo_turma" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="codigo_disciplina" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_turma"
+                                 baseTableName="tb_disciplina_turma"
+                                 constraintName="fk_tb_disciplina_turma_codigo_turma"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_disciplina"
+                                 baseTableName="tb_disciplina_turma"
+                                 constraintName="fk_tb_disciplina_turma_codigo_aluno"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_disciplina"/>
+
+        <addColumn tableName="tb_turma">
+            <column name="codigo_periodicidade" type="bigint"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_periodicidade"
+                                 baseTableName="tb_turma"
+                                 constraintName="fk_codigo_turma_periodicidade"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_periodicidade"/>
+    </changeSet>
+</databaseChangeLog>

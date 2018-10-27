@@ -40,7 +40,7 @@ public class UsuarioResource {
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
+    public ResponseEntity<Usuario> buscarPeloCodigo(@PathVariable Long codigo) {
         log.info("REST request para buscar Usuário: {}", codigo);
         Optional<Usuario> usuarioRetornado = this.usuarioService.buscarPorCodigo(codigo);
         return usuarioRetornado.isPresent() ? ResponseEntity.ok(usuarioRetornado.get()) : ResponseEntity.notFound().build();

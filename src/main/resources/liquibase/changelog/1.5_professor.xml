@@ -31,6 +31,14 @@
 
             <column name="genero" type="smallint"/>
 
+            <column name="rg" type="varchar(7)">
+                <constraints unique="true"/>
+            </column>
+
+            <column name="cpf" type="varchar(11)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
             <column name="curriculo" type="varchar(5000)"/>
         </createTable>
 

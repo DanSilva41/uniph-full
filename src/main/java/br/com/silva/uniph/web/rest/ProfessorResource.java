@@ -40,7 +40,7 @@ public class ProfessorResource {
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<?> buscarPeloCodigo(@PathVariable Long codigo) {
+    public ResponseEntity<Professor> buscarPeloCodigo(@PathVariable Long codigo) {
         log.info("REST request para buscar Professores: {}", codigo);
         Optional<Professor> professorRetornado = this.professorService.buscarPorCodigo(codigo);
         return professorRetornado.isPresent() ? ResponseEntity.ok(professorRetornado.get()) : ResponseEntity.notFound().build();

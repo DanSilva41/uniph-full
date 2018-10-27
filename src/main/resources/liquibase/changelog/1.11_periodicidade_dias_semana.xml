@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="danilo.silva" id="1.1.2"
+               logicalFilePath="src/main/resources/liquibase/changelog/1.11_periodicidade_dias_semana.xml">
+        <createTable tableName="tb_periodicidade_dias_semanas">
+
+            <column name="codigo_periodicidade" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="codigo_dias_semana" type="bytea">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_periodicidade"
+                                 baseTableName="tb_periodicidade_dias_semanas"
+                                 constraintName="fk_tb_periodicidade_dias_semana_cod_p"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_periodicidade"/>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_dias_semana"
+                                 baseTableName="tb_periodicidade_dias_semanas"
+                                 constraintName="fk_tb_periodicidade_dias_semana_cod_d"
+                                 referencedColumnNames="codigo"
+                                 referencedTableName="tb_dias_semana"/>
+    </changeSet>
+</databaseChangeLog>
