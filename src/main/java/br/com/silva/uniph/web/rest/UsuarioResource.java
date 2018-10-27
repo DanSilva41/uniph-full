@@ -22,14 +22,14 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/manager/usuarios")
 public class UsuarioResource {
 
     @Autowired
     private UsuarioService usuarioService;
 
     /**
-     * GET  /api/usuarios : buscar todos os usuarios.
+     * GET  /manager/usuarios : buscar todos os usuarios.
      *
      * @return status 200 (OK) e a lista de todos os usuarios
      */
@@ -47,7 +47,7 @@ public class UsuarioResource {
     }
 
     /**
-     * POST  /api/usuarios : Cria um novo usuário.
+     * POST  /manager/usuarios : Cria um novo usuário.
      *
      * @param usuario : o usuário a ser criado
      * @return a ResponseEntity com status 201 (Criado) e com o corpo do novo usuario
