@@ -35,4 +35,15 @@ public class ProfessorService {
         return this.professorRepository.save(professor);
     }
 
+    /**
+     * Excluir professor usando o código.
+     *
+     * @param codigo o codigo do professor a ser deletadp.
+     */
+    public void excluirProfessor(Long codigo) {
+        professorRepository.findById(codigo).ifPresent(professor -> {
+            professorRepository.delete(professor);
+            log.info("Professor excluída: {}", professor);
+        });
+    }
 }

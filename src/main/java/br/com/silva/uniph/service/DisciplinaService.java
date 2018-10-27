@@ -35,4 +35,16 @@ public class DisciplinaService {
         return this.disciplinaRepository.save(disciplina);
     }
 
+    /**
+     * Excluir disciplina usando o código.
+     *
+     * @param codigo o codigo da disciplina a ser deletada.
+     */
+    public void excluirDisciplina(Long codigo) {
+        disciplinaRepository.findById(codigo).ifPresent(disciplina -> {
+            disciplinaRepository.delete(disciplina);
+            log.info("Disciplina excluída: {}", disciplina);
+        });
+    }
+
 }

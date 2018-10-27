@@ -35,4 +35,15 @@ public class UsuarioService {
         return this.usuarioRepository.save(usuario);
     }
 
+    /**
+     * Excluir usuario usando o código.
+     *
+     * @param codigo o codigo do usuario a ser deletado.
+     */
+    public void excluirUsuario(Long codigo) {
+        usuarioRepository.findById(codigo).ifPresent(usuario -> {
+            usuarioRepository.delete(usuario);
+            log.info("Usuário excluído: {}", usuario);
+        });
+    }
 }

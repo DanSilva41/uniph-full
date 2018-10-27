@@ -35,4 +35,16 @@ public class TurmaService {
         return this.turmaRepository.save(turma);
     }
 
+    /**
+     * Excluir turma usando o código.
+     *
+     * @param codigo o codigo da turma a ser deletada.
+     */
+    public void excluirTurma(Long codigo) {
+        turmaRepository.findById(codigo).ifPresent(turma -> {
+            turmaRepository.delete(turma);
+            log.info("Turma excluída: {}", turma);
+        });
+    }
+
 }

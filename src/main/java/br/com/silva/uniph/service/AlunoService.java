@@ -31,12 +31,24 @@ public class AlunoService {
         return this.alunoRepository.findAll();
     }
 
-    public Aluno salvar(Aluno aluno) {
+    public Aluno salvarAluno(Aluno aluno) {
         return this.alunoRepository.save(aluno);
     }
 
     public Optional<Aluno> buscarPorCpf(String cpf) {
         return this.alunoRepository.findOneByCpf(cpf);
+    }
+
+    /**
+     * Excluir aluno usando o código.
+     *
+     * @param codigo o codigo do aluno a ser deletado.
+     */
+    public void excluirAluno(Long codigo) {
+        alunoRepository.findById(codigo).ifPresent(aluno -> {
+            alunoRepository.delete(aluno);
+            log.info("Aluno excluído: {}", aluno);
+        });
     }
 
 }
