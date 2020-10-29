@@ -2,6 +2,7 @@ package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Usuario;
 import br.com.silva.uniph.service.UsuarioService;
+import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,16 @@ public class UsuarioResource {
         return ResponseEntity.created(uri).body(usuarioSalvo);
     }
 
-
+    /**
+     * POST  /manager/usuarios/id : Excluir um usuário.
+     *
+     * @param id : id do usuário a ser excluido
+     * @return a ResponseEntity com status 201 (Criado)
+     */
+    @PostMapping("/{codigo}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        log.info("Requisição REST para excluir Usuário: {}", id);
+        this.usuarioService.excluirUsuario(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("usuario.deletado", String.valueOf(id))).build();
+    }
 }

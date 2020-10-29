@@ -2,6 +2,7 @@ package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Professor;
 import br.com.silva.uniph.service.ProfessorService;
+import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,19 @@ public class ProfessorResource {
         Professor professorSalvo = this.professorService.salvar(professor);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(professorSalvo.getCodigo()).toUri();
         return ResponseEntity.created(uri).body(professorSalvo);
+    }
+
+    /**
+     * POST  /api/professores/id : Excluir um professor.
+     *
+     * @param id : id do professor ser excluido
+     * @return a ResponseEntity com status 201 (Criado)
+     */
+    @PostMapping("/{codigo}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        log.info("Requisição REST para excluir Professor: {}", id);
+        this.professorService.excluirProfessor(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("professor.deletado", String.valueOf(id))).build();
     }
 
 }

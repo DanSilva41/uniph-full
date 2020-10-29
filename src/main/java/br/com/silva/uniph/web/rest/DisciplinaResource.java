@@ -2,6 +2,7 @@ package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Disciplina;
 import br.com.silva.uniph.service.DisciplinaService;
+import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,17 @@ public class DisciplinaResource {
         return ResponseEntity.created(uri).body(disciplinaSalva);
     }
 
+    /**
+     * POST  /api/disciplinas/id : Excluir uma disciplina.
+     *
+     * @param id : id da disciplina ser excluida
+     * @return a ResponseEntity com status 201 (Criado)
+     */
+    @PostMapping("/{codigo}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        log.info("Requisição REST para excluir Disciplina: {}", id);
+        this.disciplinaService.excluirDisciplina(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("disciplina.deletado", String.valueOf(id))).build();
+    }
 
 }

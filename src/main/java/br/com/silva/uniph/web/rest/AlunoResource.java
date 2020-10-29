@@ -2,6 +2,7 @@ package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Aluno;
 import br.com.silva.uniph.service.AlunoService;
+import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,16 @@ public class AlunoResource {
         return ResponseEntity.created(uri).body(alunoSalvo);
     }
 
-
+    /**
+     * POST  /api/alunos/id : Excluir um aluno.
+     *
+     * @param id : id do alunoa ser excluido
+     * @return a ResponseEntity com status 201 (Criado)
+     */
+    @PostMapping("/{codigo}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        log.info("Requisição REST para excluir Aluno: {}", id);
+        this.alunoService.excluirAluno(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("aluno.deletado", String.valueOf(id))).build();
+    }
 }

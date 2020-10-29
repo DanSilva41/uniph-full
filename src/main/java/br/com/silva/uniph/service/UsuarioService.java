@@ -46,4 +46,18 @@ public class UsuarioService {
             log.info("Usuário excluído: {}", usuario);
         });
     }
+
+    public Optional<Usuario> buscarPorLogin(String login) {
+        return this.usuarioRepository.findOneByLogin(login);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Usuario> getUserWithAuthoritiesByLogin(String login) {
+        return usuarioRepository.findOneWithAuthoritiesByLogin(login);
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario getUserWithAuthorities(Long codigo) {
+        return usuarioRepository.findOneWithAuthoritiesByCodigo(codigo);
+    }
 }

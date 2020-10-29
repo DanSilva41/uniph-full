@@ -1,14 +1,18 @@
 package br.com.silva.uniph.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Danilo Silva P.
@@ -37,6 +41,14 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private String senha;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_authority", joinColumns = {
+            @JoinColumn(name = "usuario_codigo", referencedColumnName = "codigo")}, inverseJoinColumns = {
+            @JoinColumn(name = "authority_nome", referencedColumnName = "nome")})
+    @BatchSize(size = 20)
+    private Set<Authority> authorities = new HashSet<>(0);
+
     public Long getCodigo() {
         return codigo;
     }
@@ -47,6 +59,10 @@ public class Usuario implements Serializable {
 
     public String getSenha() {
         return senha;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 
     @Override

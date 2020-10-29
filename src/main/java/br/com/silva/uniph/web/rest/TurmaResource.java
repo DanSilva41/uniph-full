@@ -2,6 +2,7 @@ package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Turma;
 import br.com.silva.uniph.service.TurmaService;
+import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,17 @@ public class TurmaResource {
         return ResponseEntity.created(uri).body(turmaSalva);
     }
 
+    /**
+     * POST  /api/turmar/id : Excluir uma turma.
+     *
+     * @param id : id da turma ser excluida
+     * @return a ResponseEntity com status 201 (Criado)
+     */
+    @PostMapping("/{codigo}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        log.info("Requisição REST para excluir Turma: {}", id);
+        this.turmaService.excluirTurma(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("turma.deletado", String.valueOf(id))).build();
+    }
 
 }
