@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: uniph-service
+  datasource:
+    url: jdbc:postgresql://192.168.99.100:5432/uniph_full
+    username: postgres
+    password: 12345678
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate.naming:
+      implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+      physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+    show-sql: ${SHOW_SQL:true}
+
+  liquibase:
+    change-log: classpath:changelog-master.yaml
+
+  jackson:
+    date-format: yyyy-MM-dd
+    deserialization.fail-on-unknown-properties: true
+
+  profiles:
+    active:

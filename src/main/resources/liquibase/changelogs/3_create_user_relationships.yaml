@@ -1,0 +1,94 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_user_relationship_for_student
+      author: danilosilvap
+      changes:
+        # Column for foreign key in domain.student from security.user
+        - addColumn:
+            tableName: student
+            schemaName: domain
+            columns:
+              - column:
+                  name: user_code
+                  type: bigint
+                  constraints:
+                    nullable: false
+        # Foreign key in domain.student from security.user
+        - addForeignKeyConstraint:
+            constraintName: fk_user_student_code
+            baseTableSchemaName: domain
+            baseTableName: student
+            baseColumnNames: user_code
+            referencedTableSchemaName: security
+            referencedTableName: user
+            referencedColumnNames: code
+  - changeSet:
+      id: create_user_relationship_for_teacher
+      author: danilosilvap
+      changes:
+        # Column for foreign key in domain.teacher from security.user
+        - addColumn:
+            tableName: teacher
+            schemaName: domain
+            columns:
+              - column:
+                  name: user_code
+                  type: bigint
+                  constraints:
+                    nullable: false
+        # Foreign key in domain.teacher from security.user
+        - addForeignKeyConstraint:
+            constraintName: fk_user_teacher_code
+            baseTableSchemaName: domain
+            baseTableName: teacher
+            baseColumnNames: user_code
+            referencedTableSchemaName: security
+            referencedTableName: user
+            referencedColumnNames: code
+  - changeSet:
+      id: create_table_user_authority
+      author: danilosilvap
+      changes:
+        # Associate table between security.authority and security.user
+        - createTable:
+            tableName: user_authority
+            schemaName: security
+            columns:
+              - column:
+                  name: authority_name
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: create_authority_relationship_for_user_authority
+      author: danilosilvap
+      changes:
+        # Foreign key in security.user_authority from security.authority
+        - addForeignKeyConstraint:
+            constraintName: fk_user_authority_authority_code
+            baseTableSchemaName: security
+            baseTableName: user_authority
+            baseColumnNames: authority_name
+            referencedTableSchemaName: security
+            referencedTableName: authority
+            referencedColumnNames: name
+  - changeSet:
+      id: create_user_relationship_for_user_authority
+      author: danilosilvap
+      changes:
+        # Foreign key in security.user_authority from security.user
+        - addForeignKeyConstraint:
+            constraintName: fk_user_authority_user_code
+            baseTableSchemaName: security
+            baseTableName: user_authority
+            baseColumnNames: user_code
+            referencedTableSchemaName: security
+            referencedTableName: user
+            referencedColumnNames: code

@@ -1,0 +1,299 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_student
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: student
+            schemaName: domain
+            columns:
+              - column:
+                  name: code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_birth
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: rg
+                  type: varchar(7)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: cpf
+                  type: varchar(11)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+  - changeSet:
+      id: create_sequence_student_code
+      author: danilosilvap
+      changes:
+        - createSequence:
+            sequenceName: student_code
+            schemaName: domain
+            incrementBy: 1
+            startValue: 1
+  - changeSet:
+      id: create_table_teacher
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: teacher
+            schemaName: domain
+            columns:
+              - column:
+                  name: code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_birth
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: rg
+                  type: varchar(7)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: cpf
+                  type: varchar(11)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: biography
+                  type: varchar(5000)
+  - changeSet:
+      id: create_sequence_teacher_code
+      author: danilosilvap
+      changes:
+        - createSequence:
+            sequenceName: teacher_code
+            schemaName: domain
+            incrementBy: 1
+            startValue: 1
+  - changeSet:
+      id: create_table_discipline
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: discipline
+            schemaName: domain
+            columns:
+              - column:
+                  name: code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: workload
+                  type: smallint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_sequence_discipline_code
+      author: danilosilvap
+      changes:
+        - createSequence:
+            sequenceName: discipline_code
+            schemaName: domain
+            incrementBy: 1
+            startValue: 1
+  - changeSet:
+      id: create_table_frequency
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: frequency
+            schemaName: domain
+            columns:
+              - column:
+                  name: code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: varchar
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_sequence_frequency_code
+      author: danilosilvap
+      changes:
+        - createSequence:
+            sequenceName: frequency_code
+            schemaName: domain
+            incrementBy: 1
+            startValue: 1
+  - changeSet:
+      id: create_table_days_week
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: days_week
+            schemaName: domain
+            columns:
+              - column:
+                  name: code
+                  type: bytea
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(7)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_table_course
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: course
+            schemaName: domain
+            columns:
+              - column:
+                  name: code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_sequence_course_code
+      author: danilosilvap
+      changes:
+        - createSequence:
+            sequenceName: course_code
+            schemaName: domain
+            incrementBy: 1
+            startValue: 1
+  - changeSet:
+      id: create_table_user
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: user
+            schemaName: security
+            columns:
+              - column:
+                  name: code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_sequence_user_code
+      author: danilosilvap
+      changes:
+        - createSequence:
+            sequenceName: user_code
+            schemaName: security
+            incrementBy: 1
+            startValue: 1
+  - changeSet:
+      id: create_table_authority
+      author: danilosilvap
+      changes:
+        - createTable:
+            tableName: authority
+            schemaName: security
+            columns:
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false

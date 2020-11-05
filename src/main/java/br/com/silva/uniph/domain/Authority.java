@@ -9,26 +9,26 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * An authority (a security role) used by Spring Security.
+ * @author Danilo Silva P.
  */
 @Entity
-@Table(name = "authority")
+@Table(schema = "security", name = "authority")
 public final class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Size(min = 0, max = 50)
     @Id
-    @Column(length = 50)
-    private String nome;
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "name", length = 50, nullable = false)
+    private String name;
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = nome;
     }
 
     @Override
@@ -40,16 +40,16 @@ public final class Authority implements Serializable {
             return false;
         }
         Authority authority = (Authority) obj;
-        return !(nome != null ? !nome.equals(authority.nome) : authority.nome != null);
+        return !(name != null ? !name.equals(authority.name) : authority.name != null);
     }
 
     @Override
     public int hashCode() {
-        return nome != null ? nome.hashCode() : 0;
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Authority{" + "nome='" + nome + '\'' + "}";
+        return "Authority{" + "nome='" + name + '\'' + "}";
     }
 }

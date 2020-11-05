@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_data_days_week
+      author: danilosilvap
+      changes:
+        - loadData:
+            schemaName: domain
+            tableName: days_week
+            file: liquibase/files/days_week.csv
+            encoding: UTF-8
+            separator: ;
+            identityInsertEnabled: true

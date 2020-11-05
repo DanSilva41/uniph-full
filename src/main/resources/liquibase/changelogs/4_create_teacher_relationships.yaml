@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_teacher_relationship_for_discipline
+      author: danilosilvap
+      changes:
+        # Column for foreign key in domain.discipline from domain.teacher
+        - addColumn:
+            tableName: discipline
+            schemaName: domain
+            columns:
+              - column:
+                  name: teacher_code
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_teacher_discipline_code
+            baseTableSchemaName: domain
+            baseTableName: discipline
+            baseColumnNames: teacher_code
+            referencedTableSchemaName: domain
+            referencedTableName: teacher
+            referencedColumnNames: code

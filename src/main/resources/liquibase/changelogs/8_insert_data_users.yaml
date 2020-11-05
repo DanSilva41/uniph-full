@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_data_users
+      author: danilosilvap
+      changes:
+        - loadData:
+            schemaName: security
+            tableName: user
+            file: liquibase/files/users.csv
+            encoding: UTF-8
+            separator: ;
+            identityInsertEnabled: true

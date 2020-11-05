@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_frequency_relationship_for_course
+      author: danilosilvap
+      changes:
+        # Column for foreign key in domain.course from domain.frequency
+        - addColumn:
+            schemaName: domain
+            tableName: course
+            columns:
+              - column:
+                  name: frequency_code
+                  type: bigint
+                  constraints:
+                    nullable: false
+        # Foreign key in domain.course from domain.frequency
+        - addForeignKeyConstraint:
+            constraintName: fk_frequency_course_code
+            baseTableSchemaName: domain
+            baseTableName: course
+            baseColumnNames: frequency_code
+            referencedTableSchemaName: domain
+            referencedTableName: frequency
+            referencedColumnNames: code
+  - changeSet:
+      id: create_table_frequency_days_week
+      author: danilosilvap
+      changes:
+        # Associate table between domain.days_week and domain.frequency
+        - createTable:
+            tableName: frequency_days_week
+            schemaName: domain
+            columns:
+              - column:
+                  name: days_week_code
+                  type: bytea
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: frequency_code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: create_frequency_days_week_relationship_for_frequency_days_week
+      author: danilosilvap
+      changes:
+        # Foreign key in domain.frequency_days_week from domain.days_week
+        - addForeignKeyConstraint:
+            constraintName: fk_frequency_days_week_days_week_code
+            baseTableSchemaName: domain
+            baseTableName: frequency_days_week
+            baseColumnNames: days_week_code
+            referencedTableSchemaName: domain
+            referencedTableName: days_week
+            referencedColumnNames: code
+        # Foreign key in domain.frequency_days_week from domain.frequency
+        - addForeignKeyConstraint:
+            constraintName: fk_frequency_days_week_frequency_code
+            baseTableSchemaName: domain
+            baseTableName: frequency_days_week
+            baseColumnNames: frequency_code
+            referencedTableSchemaName: domain
+            referencedTableName: frequency
+            referencedColumnNames: code

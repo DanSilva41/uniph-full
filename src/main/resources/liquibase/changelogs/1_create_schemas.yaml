@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_schemas
+      author: danilosilvap
+      changes:
+        - sql:
+            comment: Main schema creation
+            dbms: 'postgresql, h2'
+            sql: CREATE SCHEMA IF NOT EXISTS domain; CREATE SCHEMA IF NOT EXISTS security; CREATE SCHEMA IF NOT EXISTS audit;

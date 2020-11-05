@@ -1,0 +1,87 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_student_course
+      author: danilosilvap
+      changes:
+        # Associate table between domain.student and domain.course
+        - createTable:
+            tableName: student_course
+            schemaName: domain
+            columns:
+              - column:
+                  name: student_code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: course_code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: create_student_course_relationship_for_student_course
+      author: danilosilvap
+      changes:
+        # Foreign key in domain.student_course from domain.student
+        - addForeignKeyConstraint:
+            constraintName: fk_student_course_student_code
+            baseTableSchemaName: domain
+            baseTableName: student_course
+            baseColumnNames: student_code
+            referencedTableSchemaName: domain
+            referencedTableName: student
+            referencedColumnNames: code
+        # Foreign key in domain.student_course from domain.course
+        - addForeignKeyConstraint:
+            constraintName: fk_student_course_course_code
+            baseTableSchemaName: domain
+            baseTableName: student_course
+            baseColumnNames: course_code
+            referencedTableSchemaName: domain
+            referencedTableName: course
+            referencedColumnNames: code
+  - changeSet:
+      id: create_table_discipline_course
+      author: danilosilvap
+      changes:
+        # Associate table between domain.discipline and domain.course
+        - createTable:
+            tableName: discipline_course
+            schemaName: domain
+            columns:
+              - column:
+                  name: discipline_code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: course_code
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: create_discipline_course_relationship_for_discipline_course
+      author: danilosilvap
+      changes:
+        # Foreign key in domain.discipline_course from domain.discipline
+        - addForeignKeyConstraint:
+            constraintName: fk_discipline_course_discipline_code
+            baseTableSchemaName: domain
+            baseTableName: discipline_course
+            baseColumnNames: discipline_code
+            referencedTableSchemaName: domain
+            referencedTableName: discipline
+            referencedColumnNames: code
+        # Foreign key in domain.discipline_course from domain.course
+        - addForeignKeyConstraint:
+            constraintName: fk_discipline_course_course_code
+            baseTableSchemaName: domain
+            baseTableName: discipline_course
+            baseColumnNames: course_code
+            referencedTableSchemaName: domain
+            referencedTableName: course
+            referencedColumnNames: code
