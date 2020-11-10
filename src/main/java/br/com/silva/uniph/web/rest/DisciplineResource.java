@@ -1,7 +1,7 @@
 package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Discipline;
-import br.com.silva.uniph.service.DisciplineService;
+import br.com.silva.uniph.service.impl.DisciplineService;
 import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,62 +15,61 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * REST controller para gerenciar disciplinas.
- * Esta classe acessa a entidade Disciplina
+ * REST controller to manage disciplines
  *
  * @author Danilo Silva P.
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/disciplinas")
+@RequestMapping("/api/disciplines")
 public class DisciplineResource {
 
     @Autowired
     private DisciplineService disciplineService;
 
     /**
-     * GET  /api/disciplinas : buscar todos as disciplinas.
+     * GET  /api/disciplines : search all disciplines
      *
-     * @return status 200 (OK) e a lista de todas as disciplinas
+     * @return status 200 (OK) and the list of all disciplines
      */
     @GetMapping
-    public Collection<Discipline> listar() {
-        log.info("REST request para buscar todas as disciplinas");
+    public Collection<Discipline> findAll() {
+        log.info("REST request to search all disciplines");
         return this.disciplineService.findAll();
     }
 
-    @GetMapping("/{codigo}")
-    public ResponseEntity<Discipline> buscarPeloCodigo(@PathVariable Long codigo) {
-        log.info("REST request para buscar Disciplina: {}", codigo);
-        Optional<Discipline> disciplinaRetornada = this.disciplineService.findByCode(codigo);
-        return disciplinaRetornada.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{code}")
+    public ResponseEntity<Discipline> findByCode(@PathVariable Long code) {
+        log.info("REST request to search for discipline: {}", code);
+        Optional<Discipline> disciplineReturned = this.disciplineService.findByCode(code);
+        return disciplineReturned.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
-     * POST  /api/disciplinas : Cria uma nova disciplina.
+     * POST  /api/disciplines : creates a new discipline
      *
-     * @param discipline : a disciplina a ser criada
-     * @return a ResponseEntity com status 201 (Criado) e com o corpo da nova disciplina
+     * @param discipline : the discipline to be created
+     * @return ResponseEntity with status 201 (Created) and with the body of the new discipline
      */
     @PostMapping
-    public ResponseEntity<Discipline> cadastrar(@RequestBody @Valid Discipline discipline) {
-        log.info("Requisição REST para salvar Disciplina: {}", discipline);
-        Discipline disciplineSaved = this.disciplineService.saveDiscipline(discipline);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(disciplineSaved.getCode()).toUri();
+    public ResponseEntity<Discipline> save(@RequestBody @Valid Discipline discipline) {
+        log.info("REST request to save Discipline: {}", discipline);
+        Discipline disciplineSaved = this.disciplineService.save(discipline);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{code}").buildAndExpand(disciplineSaved.getCode()).toUri();
         return ResponseEntity.created(uri).body(disciplineSaved);
     }
 
     /**
-     * POST  /api/disciplinas/id : Excluir uma disciplina.
+     * POST  /api/disciplines/code : delete a course
      *
-     * @param code : id da disciplina ser excluida
-     * @return a ResponseEntity com status 201 (Criado)
+     * @param code : discipline code to be deleted
+     * @return ResponseEntity with status 201 (created)
      */
     @PostMapping("/{code}")
-    public ResponseEntity<Void> excluir(@PathVariable Long code) {
-        log.info("Requisição REST para excluir Disciplina: {}", code);
-        this.disciplineService.deleteDiscipline(code);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("disciplina.deletado", String.valueOf(code))).build();
+    public ResponseEntity<Void> delete(@PathVariable Long code) {
+        log.info("REST request to delete discipline: {}", code);
+        this.disciplineService.delete(code);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("discipline.removed", String.valueOf(code))).build();
     }
 
 }

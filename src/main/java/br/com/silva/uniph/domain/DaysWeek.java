@@ -1,6 +1,7 @@
 package br.com.silva.uniph.domain;
 
 import com.google.common.base.Objects;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Entity
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(schema = "domain", name = "days_week")
 public class DaysWeek implements Serializable {
 

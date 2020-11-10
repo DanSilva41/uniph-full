@@ -1,7 +1,7 @@
 package br.com.silva.uniph.security;
 
 import br.com.silva.uniph.domain.User;
-import br.com.silva.uniph.service.UserService;
+import br.com.silva.uniph.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

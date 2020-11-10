@@ -1,7 +1,8 @@
-package br.com.silva.uniph.service;
+package br.com.silva.uniph.service.impl;
 
 import br.com.silva.uniph.domain.User;
 import br.com.silva.uniph.repository.UserRepository;
+import br.com.silva.uniph.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,22 +17,24 @@ import java.util.Optional;
  * @author Danilo Silva P.
  */
 @Service
-@Transactional
 @Slf4j
 @AllArgsConstructor
-public class UserService {
+public class UserService implements AbstractService<User> {
 
     private final UserRepository userRepository;
 
+    @Override
     public Optional<User> findByCode(Long code) {
         return this.userRepository.findById(code);
     }
 
+    @Override
     public Collection<User> findAll() {
         return this.userRepository.findAll();
     }
 
-    public User saveUser(User user) {
+    @Override
+    public User save(User user) {
         return this.userRepository.save(user);
     }
 
@@ -40,7 +43,8 @@ public class UserService {
      *
      * @param code the user code to be deleted
      */
-    public void deleteUser(Long code) {
+    @Override
+    public void delete(Long code) {
         userRepository.findById(code).ifPresent(usuario -> {
             userRepository.delete(usuario);
             log.info("User removed: {}", usuario);

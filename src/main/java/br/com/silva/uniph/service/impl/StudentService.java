@@ -1,7 +1,8 @@
-package br.com.silva.uniph.service;
+package br.com.silva.uniph.service.impl;
 
 import br.com.silva.uniph.domain.Student;
 import br.com.silva.uniph.repository.StudentRepository;
+import br.com.silva.uniph.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,25 +17,28 @@ import java.util.Optional;
  * @author Danilo Silva P.
  */
 @Service
-@Transactional
 @Slf4j
 @AllArgsConstructor
-public class StudentService {
+public class StudentService implements AbstractService<Student> {
 
     private final StudentRepository studentRepository;
 
+    @Override
     public Optional<Student> findByCode(Long code) {
         return this.studentRepository.findById(code);
     }
 
+    @Override
     public Collection<Student> findAll() {
         return this.studentRepository.findAll();
     }
 
-    public Student saveStudent(Student student) {
+    @Override
+    public Student save(Student student) {
         return this.studentRepository.save(student);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Student> findByCpf(String cpf) {
         return this.studentRepository.findOneByCpf(cpf);
     }
@@ -44,7 +48,8 @@ public class StudentService {
      *
      * @param code the student code to be deleted
      */
-    public void deleteStudent(Long code) {
+    @Override
+    public void delete(Long code) {
         studentRepository.findById(code).ifPresent(aluno -> {
             studentRepository.delete(aluno);
             log.info("Student removed: {}", aluno);

@@ -1,4 +1,4 @@
-package br.com.silva.uniph.web.rest.swagger;
+package br.com.silva.uniph.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

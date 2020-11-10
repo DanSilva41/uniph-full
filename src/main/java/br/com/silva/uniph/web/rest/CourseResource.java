@@ -1,7 +1,7 @@
 package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Course;
-import br.com.silva.uniph.service.CourseService;
+import br.com.silva.uniph.service.impl.CourseService;
 import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,61 +15,60 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * REST controller para gerenciar turmas.
- * Esta classe acessa a entidade Turma
+ * REST controller to manage courses.
  *
  * @author Danilo Silva P.
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/turmas")
+@RequestMapping("/api/courses")
 public class CourseResource {
 
     @Autowired
     private CourseService courseService;
 
     /**
-     * GET  /api/turmas : buscar todos as turmas.
+     * GET  /api/courses : pick up all courses
      *
-     * @return status 200 (OK) e a lista de todas as turmas
+     * @return status 200 (OK) and the list of all courses
      */
     @GetMapping
-    public Collection<Course> listar() {
-        log.info("REST request para buscar todas as turmas");
+    public Collection<Course> findAll() {
+        log.info("REST request to search all courses");
         return this.courseService.findAll();
     }
 
-    @GetMapping("/{codigo}")
-    public ResponseEntity<Course> buscarPeloCodigo(@PathVariable Long codigo) {
-        log.info("REST request para buscar Turma: {}", codigo);
-        Optional<Course> turmaRetornada = this.courseService.findByCode(codigo);
-        return turmaRetornada.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{code}")
+    public ResponseEntity<Course> findByCode(@PathVariable Long code) {
+        log.info("REST request to search for courses: {}", code);
+        Optional<Course> courseReturned = this.courseService.findByCode(code);
+        return courseReturned.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
-     * POST  /api/turmas : Cria uma nova turma.
+     * POST  /api/courses : creates a new course
      *
-     * @param turma : a turma a ser criada
-     * @return a ResponseEntity com status 201 (Criado) e com o corpo da nova turma
+     * @param course : the course to be created
+     * @return ResponseEntity with status 201 (created) and with the body of the new course
      */
     @PostMapping
-    public ResponseEntity<Course> cadastrar(@RequestBody @Valid Course turma) {
-        log.info("Requisição REST para salvar Turma: {}", turma);
-        Course turmaSalva = this.courseService.saveCourse(turma);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(turmaSalva.getCode()).toUri();
-        return ResponseEntity.created(uri).body(turmaSalva);
+    public ResponseEntity<Course> save(@RequestBody @Valid Course course) {
+        log.info("REST request to save course: {}", course);
+        Course courseSaved = this.courseService.save(course);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{code}").buildAndExpand(courseSaved.getCode()).toUri();
+        return ResponseEntity.created(uri).body(courseSaved);
     }
 
     /**
-     * POST  /api/turmar/id : Excluir uma turma.
+     * POST  /api/course/code : Delete a course
      *
-     * @param code : id da turma ser excluida
-     * @return a ResponseEntity com status 201 (Criado)
+     * @param code : class code to be deleted
+     * @return ResponseEntity with status 201 (created)
      */
     @PostMapping("/{code}")
-    public ResponseEntity<Void> excluir(@PathVariable Long code) {
-        log.info("Requisição REST para excluir Turma: {}", code);
-        this.courseService.deleteCourse(code);
+    public ResponseEntity<Void> delete(@PathVariable Long code) {
+        log.info("REST request to exclude course: {}", code);
+        this.courseService.delete(code);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert("course.removed", String.valueOf(code))).build();
     }
 

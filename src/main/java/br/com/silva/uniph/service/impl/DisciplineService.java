@@ -1,11 +1,11 @@
-package br.com.silva.uniph.service;
+package br.com.silva.uniph.service.impl;
 
 import br.com.silva.uniph.domain.Discipline;
 import br.com.silva.uniph.repository.DisciplineRepository;
+import br.com.silva.uniph.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -16,22 +16,24 @@ import java.util.Optional;
  * @author Danilo Silva P.
  */
 @Service
-@Transactional
 @Slf4j
 @AllArgsConstructor
-public class DisciplineService {
+public class DisciplineService implements AbstractService<Discipline> {
 
     private final DisciplineRepository disciplineRepository;
 
+    @Override
     public Optional<Discipline> findByCode(Long code) {
         return this.disciplineRepository.findById(code);
     }
 
+    @Override
     public Collection<Discipline> findAll() {
         return this.disciplineRepository.findAll();
     }
 
-    public Discipline saveDiscipline(Discipline discipline) {
+    @Override
+    public Discipline save(Discipline discipline) {
         return this.disciplineRepository.save(discipline);
     }
 
@@ -40,7 +42,8 @@ public class DisciplineService {
      *
      * @param code the discipline code to be deleted
      */
-    public void deleteDiscipline(Long code) {
+    @Override
+    public void delete(Long code) {
         disciplineRepository.findById(code).ifPresent(disciplina -> {
             disciplineRepository.delete(disciplina);
             log.info("Discipline removed: {}", disciplina);

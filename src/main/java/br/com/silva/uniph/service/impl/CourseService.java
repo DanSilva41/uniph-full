@@ -1,11 +1,11 @@
-package br.com.silva.uniph.service;
+package br.com.silva.uniph.service.impl;
 
 import br.com.silva.uniph.domain.Course;
 import br.com.silva.uniph.repository.CourseRepository;
+import br.com.silva.uniph.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -16,22 +16,24 @@ import java.util.Optional;
  * @author Danilo Silva P.
  */
 @Service
-@Transactional
 @Slf4j
 @AllArgsConstructor
-public class CourseService {
+public class CourseService implements AbstractService<Course> {
 
     private final CourseRepository courseRepository;
 
+    @Override
     public Optional<Course> findByCode(Long code) {
         return this.courseRepository.findById(code);
     }
 
+    @Override
     public Collection<Course> findAll() {
         return this.courseRepository.findAll();
     }
 
-    public Course saveCourse(Course course) {
+    @Override
+    public Course save(Course course) {
         return this.courseRepository.save(course);
     }
 
@@ -40,7 +42,8 @@ public class CourseService {
      *
      * @param code the course code to be deleted
      */
-    public void deleteCourse(Long code) {
+    @Override
+    public void delete(Long code) {
         courseRepository.findById(code).ifPresent(turma -> {
             courseRepository.delete(turma);
             log.info("Course removed: {}", turma);

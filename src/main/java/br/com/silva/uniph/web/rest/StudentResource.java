@@ -1,7 +1,7 @@
 package br.com.silva.uniph.web.rest;
 
 import br.com.silva.uniph.domain.Student;
-import br.com.silva.uniph.service.StudentService;
+import br.com.silva.uniph.service.impl.StudentService;
 import br.com.silva.uniph.web.rest.util.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,61 +15,60 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * REST controller para gerenciar alunos.
- * Esta classe acessa a entidade Aluno
+ * REST controller to manage students
  *
  * @author Danilo Silva P.
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/alunos")
+@RequestMapping("/api/students")
 public class StudentResource {
 
     @Autowired
     private StudentService studentService;
 
     /**
-     * GET  /api/alunos : buscar todos os alunos.
+     * GET  /api/students : search for all students
      *
-     * @return status 200 (OK) e a lista de todos os alunos
+     * @return status 200 (OK) and the list of all students
      */
     @GetMapping
-    public Collection<Student> listar() {
-        log.info("REST request para buscar todos os alunos");
+    public Collection<Student> findAll() {
+        log.info("REST request to search for all students");
         return this.studentService.findAll();
     }
 
-    @GetMapping("/{codigo}")
-    public ResponseEntity<Student> buscarPeloCodigo(@PathVariable Long codigo) {
-        log.info("REST request para buscar Aluno: {}", codigo);
-        Optional<Student> alunoRetornado = this.studentService.findByCode(codigo);
-        return alunoRetornado.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{code}")
+    public ResponseEntity<Student> findByCode(@PathVariable Long code) {
+        log.info("REST request to pick up student: {}", code);
+        Optional<Student> studentReturned = this.studentService.findByCode(code);
+        return studentReturned.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
-     * POST  /api/alunos : Cria um novo aluno.
+     * POST  /api/students : creates a new student
      *
-     * @param student : o aluno a ser criado
-     * @return a ResponseEntity com status 201 (Criado) e com o corpo do novo aluno
+     * @param student : the student to be created
+     * @return ResponseEntity with status 201 (Created) and with the body of the new student
      */
     @PostMapping
-    public ResponseEntity<Student> cadastrar(@Valid @RequestBody Student student) {
-        log.info("Requisição REST para salvar Animal: {}", student);
-        Student studentSalved = this.studentService.saveStudent(student);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(studentSalved.getCpf()).toUri();
+    public ResponseEntity<Student> save(@Valid @RequestBody Student student) {
+        log.info("REST request to save animal: {}", student);
+        Student studentSalved = this.studentService.save(student);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{code}").buildAndExpand(studentSalved.getCpf()).toUri();
         return ResponseEntity.created(uri).body(studentSalved);
     }
 
     /**
-     * POST  /api/alunos/id : Excluir um aluno.
+     * POST  /api/students/code : delete a student
      *
-     * @param code : id do alunoa ser excluido
-     * @return a ResponseEntity com status 201 (Criado)
+     * @param code : student code to be deleted
+     * @return ResponseEntity with status 201 (Created)
      */
     @PostMapping("/{code}")
-    public ResponseEntity<Void> excluir(@PathVariable Long code) {
-        log.info("Requisição REST para excluir Aluno: {}", code);
-        this.studentService.deleteStudent(code);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("aluno.deletado", String.valueOf(code))).build();
+    public ResponseEntity<Void> delete(@PathVariable Long code) {
+        log.info("REST request to exclude student: {}", code);
+        this.studentService.delete(code);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("student.removed", String.valueOf(code))).build();
     }
 }
