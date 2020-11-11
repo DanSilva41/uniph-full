@@ -33,7 +33,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: days_week_code
-                  type: bytea
+                  type: varchar(1)
                   constraints:
                     primaryKey: true
                     nullable: false

@@ -24,14 +24,14 @@ public class DaysWeek implements Serializable {
 
     @Id
     @Column(name = "code", nullable = false)
-    private Byte code;
+    private String code;
 
     @NotNull
     @Size(min = 5, max = 7)
     @Column(name = "name", length = 7, nullable = false)
     private String name;
 
-    public Byte getCode() {
+    public String getCode() {
         return code;
     }
 

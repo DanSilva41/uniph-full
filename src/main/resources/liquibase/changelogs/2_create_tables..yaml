@@ -212,7 +212,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: code
-                  type: bytea
+                  type: varchar(1)
                   constraints:
                     primaryKey: true
                     nullable: false
