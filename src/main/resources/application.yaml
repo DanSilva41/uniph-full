@@ -2,16 +2,22 @@ spring:
   application:
     name: uniph-service
   datasource:
-    url: jdbc:postgresql://192.168.99.100:5432/uniph_full
-    username: postgres
-    password: 12345678
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL:${datasource.url:jdbc:postgresql://${DATASOURCE_SERVER:${datasource.server:""}}:${DATASOURCE_PORT:${datasource.port:5432}}/${DATASOURCE_DATABASE:${datasource.database:""}}}}
+    username: ${DATASOURCE_USERNAME:${database.username:""}}
+    password: ${DATASOURCE_PASSWORD:${database.password:""}}
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate.naming:
       implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
       physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
     properties:
-      hibernate.temp.use_jdbc_metadata_defaults: false
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob.non_contextual_creation: true
     show-sql: ${SHOW_SQL:true}
 
   liquibase:
