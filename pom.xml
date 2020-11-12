@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>uniph</name>
-    <description>Demo project for Uniph</description>
+    <description>Demo project for UniPH</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
